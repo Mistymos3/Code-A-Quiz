@@ -43,13 +43,13 @@ function startQuiz() {
 function clockTick() {
     //update time
     time--; // time = time - 1
-    TimerEl.textContent = time;
+    timerEl.textContent = time;
 
     //check to see if user ran out of time
     if (time <= 0) {
         quizEnd();
     }
-};
+}
 
 function getQuestion() {
     //get current question object from array
@@ -74,7 +74,7 @@ function getQuestion() {
 //<button class = "choice" value = "Cascading Style Sheets"> </button>
 
         //TEXT CONTENT IS WHAT IS DISPLAYED ON SCREEN
-        choiceNode.textContent = i + 1 + ". " + choice;
+        choiceNode.textContent = i + 1 + "." + choice;
 //<button class = "choice" value = "Cascading Style Sheets">1. Cascading Style Sheets </button>
 
 
@@ -145,7 +145,7 @@ function quizEnd() {
     endScreenEl.removeAttribute("class");
 
     //show final score
-    finalScoreEl = document.getElementById("final-score");
+    var finalScoreEl = document.getElementById("final-score");
     finalScoreEl.textContent = time;
 
     //hide questions section
@@ -174,7 +174,7 @@ function saveHighscore() {
         //save to local storage
         //set item to highscores and stringify it
         highscores.push(newScore);
-        window.localStorage.setItem("highscores", JSON.stringigy(highscores));
+        window.localStorage.setItem("highscores", JSON.stringify(highscores));
 
         //redirect to next page
         window.location.href="highscores.html";
@@ -182,24 +182,31 @@ function saveHighscore() {
 }
 
 
+function checkForEnter(event) {
+    if (event.key === "Enter") {
+        saveHighscore();
+    }
+}
 
-//user clicks button to submit initials
 submitBtn.onclick = saveHighscore;
+
 //user clicks button to start quiz
-startBtn.onclick = startQuiz();
+startBtn.onclick = startQuiz;
 
-
-
+initialsEl.onkeyup = checkForEnter;
 
 // ///user clicks start button to start quiz...select button then add onclick <4>
 // startBtn.addEventListener("click", function(){
 //     //hide start screen AND
-//     var startscreenEl = document.getElementById("start-screen");
-//     startscreenEl.setAttribute("class", "hide");
+
+//     var startScreenEl = document.getElementById("start-screen");
+//     startScreenEl.setAttribute("class", "hide");
 //     //unhide questions element so questions come up
-//     questionsEl.removeAttributer("class");
+//     questionsEl.removeAttribute("class");
 //     //AND show and start timer starts timer
-//     timerId = setInterval(clickTick, 1000);
+//     timerId = setInterval(clockTick, 1000);
+//     //show starting time
+//     timerEl.textContent = time;
 //     getQuestion()
 //         //update time
 //         time--;
